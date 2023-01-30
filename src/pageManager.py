@@ -1,5 +1,5 @@
 from tkinter import Tk
-import Home, Vigenere
+import Home, Vigenere, ExtendedVigenere, Playfair, OneTimePad
 
 class pageManager():
     def __init__(self):
@@ -21,4 +21,16 @@ class pageManager():
 
     def Vigenere(self):
         self.page = Vigenere.VigenerePage(master = self.window, pageManager = self)
+        self.page.startPage()
+        
+    def ExtendedVigenere(self):
+        self.page = ExtendedVigenere.ExtendedVigenerePage(master = self.window, pageManager = self)
+        self.page.startPage()
+        
+    def Playfair(self):
+        self.page = Playfair.PlayfairPage(master = self.window, pageManager = self)
+        self.page.startPage()
+        
+    def OneTimePad(self):
+        self.page = OneTimePad.OneTimePadPage(master = self.window, pageManager = self)
         self.page.startPage()
