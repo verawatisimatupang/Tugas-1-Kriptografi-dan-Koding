@@ -55,7 +55,7 @@ class VigenerePage(Tk.Frame):
             image=self.button_image_1,
             borderwidth=0,
             highlightthickness=0,
-            command=lambda: print("encrypt_button clicked"),
+            command=lambda: self.encrypt(),
             relief="flat"
         )
         self.encrypt_button.place(
@@ -275,3 +275,26 @@ class VigenerePage(Tk.Frame):
             group_text.append(space_text)
         result = " ".join(group_text)
         return result
+
+    def encrypt(self):
+        self.origin.Vigenere()
+        plaintext = self.entry_image_1.get()
+        key = self.entry_image_2.get()
+        
+        non_alphabet_plaintext = self.remove_not_alphabet(plaintext)
+        non_alphabet_key = self.remove_not_alphabet(key)
+        check_length_key = self.length_key(non_alphabet_plaintext,non_alphabet_key)
+        uppercase_plaintext = self.uppercase_text(non_alphabet_plaintext)
+        uppercase_key = self.uppercase_text(check_length_key)
+
+        ciphertext = []
+        for i in range (len(uppercase_plaintext)):
+            plaintext_to_int = ord(uppercase_plaintext[i]) - ord('A')
+            key_to_int = ord(uppercase_key[i]) - ord('A')
+            encrypt_formula = (plaintext_to_int + key_to_int) % 26
+            ciphertext.append(chr(encrypt_formula + ord('A')))
+        result_no_space = "".join(ciphertext)
+        self.entry_image_3.set(result_no_space)
+
+        result_with_space = self.text_with_space(result_no_space)
+        self.entry_image_4.set(result_with_space)
