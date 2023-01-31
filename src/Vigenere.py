@@ -1,5 +1,5 @@
 from pathlib import Path
-from tkinter import StringVar, Tk, Canvas, Entry, Text, Button, PhotoImage, filedialog
+from tkinter import StringVar, Tk, Canvas, Entry, Text, Button, PhotoImage, filedialog, messagebox
 import tkinter as Tk
 
 OUTPUT_PATH = Path(__file__).parent
@@ -33,7 +33,7 @@ class VigenerePage(Tk.Frame):
         self.entry_image_1 = PhotoImage(
             file=relative_to_assets("entry_1.png"))
         self.entry_bg_1 = self.canvas.create_image(
-            339.5,
+            381.0,
             589.5,
             image=self.entry_image_1
         )
@@ -45,9 +45,75 @@ class VigenerePage(Tk.Frame):
             textvariable=self.key
         )
         self.entry_1.place(
-            x=88.0,
+            x=158.0,
             y=537.0,
-            width=503.0,
+            width=446.0,
+            height=103.0
+        )
+
+        self.plain = StringVar()
+        self.entry_image_2 = PhotoImage(
+            file=relative_to_assets("entry_2.png"))
+        self.entry_bg_2 = self.canvas.create_image(
+            381.0,
+            412.5,
+            image=self.entry_image_2
+        )
+        self.entry_2 = Entry(
+            bd=0,
+            bg="#FFFFFF",
+            fg="#000716",
+            highlightthickness=0,
+            textvariable=self.plain
+        )
+        self.entry_2.place(
+            x=158.0,
+            y=360.0,
+            width=446.0,
+            height=103.0
+        )
+
+        self.cipher_with_space = StringVar()
+        self.entry_image_3 = PhotoImage(
+            file=relative_to_assets("entry_3.png"))
+        self.entry_bg_3 = self.canvas.create_image(
+            983.0,
+            589.5,
+            image=self.entry_image_3
+        )
+        self.entry_3 = Entry(
+            bd=0,
+            bg="#FFFFFF",
+            fg="#000716",
+            highlightthickness=0,
+            textvariable= self.cipher_with_space
+        )
+        self.entry_3.place(
+            x=760.0,
+            y=537.0,
+            width=446.0,
+            height=103.0
+        )
+
+        self.cipher_no_space = StringVar()
+        self.entry_image_4 = PhotoImage(
+            file=relative_to_assets("entry_4.png"))
+        self.entry_bg_4 = self.canvas.create_image(
+            983.0,
+            412.5,
+            image=self.entry_image_4
+        )
+        self.entry_4 = Entry(
+            bd=0,
+            bg="#FFFFFF",
+            fg="#000716",
+            highlightthickness=0,
+            textvariable=self.cipher_no_space
+        )
+        self.entry_4.place(
+            x=760.0,
+            y=360.0,
+            width=446.0,
             height=103.0
         )
 
@@ -61,9 +127,9 @@ class VigenerePage(Tk.Frame):
             relief="flat"
         )
         self.encrypt_button.place(
-            x=88.0,
+            x=68.0,
             y=682.0,
-            width=241.0,
+            width=250.58251953125,
             height=55.0
         )
 
@@ -77,130 +143,16 @@ class VigenerePage(Tk.Frame):
             relief="flat"
         )
         self.reset_button.place(
-            x=697.0,
+            x=682.0,
             y=682.0,
-            width=503.0,
+            width=524.0,
             height=55.0
         )
 
         self.button_image_3 = PhotoImage(
-            file=relative_to_assets("decrypt_button.png"))
-        self.decrypt_button = Button(
-            image=self.button_image_3,
-            borderwidth=0,
-            highlightthickness=0,
-            command=lambda: self.decrypt(),
-            relief="flat"
-        )
-        self.decrypt_button.place(
-            x=350.0,
-            y=682.0,
-            width=241.0,
-            height=55.0
-        )
-
-        self.plain = StringVar()
-        self.entry_image_2 = PhotoImage(
-            file=relative_to_assets("entry_2.png"))
-        self.entry_bg_2 = self.canvas.create_image(
-            339.5,
-            412.5,
-            image=self.entry_image_2
-        )
-        self.entry_2 = Entry(
-            bd=0,
-            bg="#FFFFFF",
-            fg="#000716",
-            highlightthickness=0,
-            textvariable=self.plain
-        )
-        self.entry_2.place(
-            x=88.0,
-            y=360.0,
-            width=503.0,
-            height=103.0
-        )
-
-        self.cipher_with_space = StringVar()
-        self.entry_image_3 = PhotoImage(
-            file=relative_to_assets("entry_3.png"))
-        self.entry_bg_3 = self.canvas.create_image(
-            948.5,
-            589.5,
-            image=self.entry_image_3
-        )
-        self.entry_3 = Entry(
-            bd=0,
-            bg="#FFFFFF",
-            fg="#000716",
-            highlightthickness=0,
-            textvariable= self.cipher_with_space
-        )
-        self.entry_3.place(
-            x=697.0,
-            y=537.0,
-            width=503.0,
-            height=103.0
-        )
-
-        self.cipher_no_space = StringVar()
-        self.entry_image_4 = PhotoImage(
-            file=relative_to_assets("entry_4.png"))
-        self.entry_bg_4 = self.canvas.create_image(
-            948.5,
-            412.5,
-            image=self.entry_image_4
-        )
-        self.entry_4 = Entry(
-            bd=0,
-            bg="#FFFFFF",
-            fg="#000716",
-            highlightthickness=0,
-            textvariable=self.cipher_no_space
-        )
-        self.entry_4.place(
-            x=697.0,
-            y=360.0,
-            width=503.0,
-            height=103.0
-        )
-
-        self.button_image_4 = PhotoImage(
-            file=relative_to_assets("download_button.png"))
-        self.download_button = Button(
-            image=self.button_image_4,
-            borderwidth=0,
-            highlightthickness=0,
-            command=lambda: self.downloadfile(),
-            relief="flat"
-        )
-        self.download_button.place(
-            x=697.0,
-            y=226.0,
-            width=262.0,
-            height=75.0
-        )
-
-        self.button_image_5 = PhotoImage(
-            file=relative_to_assets("upload_button.png"))
-        self.upload_button = Button(
-            image=self.button_image_5,
-            borderwidth=0,
-            highlightthickness=0,
-            command=lambda: self.uploadfiletxt(),
-            relief="flat"
-        )
-        self.upload_button.place(
-            x=88.0,
-            y=226.0,
-            width=262.0,
-            height=75.0
-        )
-
-        self.button_image_6 = PhotoImage(
             file=relative_to_assets("back_button.png"))
         self.back_button = Button(
-            image=self.button_image_6,
+            image=self.button_image_3,
             borderwidth=0,
             highlightthickness=0,
             command=lambda: self.click_backHome(),
@@ -213,8 +165,120 @@ class VigenerePage(Tk.Frame):
             height=55.0
         )
 
+        self.button_image_4 = PhotoImage(
+            file=relative_to_assets("decrypt_button.png"))
+        self.decrypt_button = Button(
+            image=self.button_image_4,
+            borderwidth=0,
+            highlightthickness=0,
+            command=lambda: self.decrypt(),
+            relief="flat"
+        )
+        self.decrypt_button.place(
+            x=340.41748046875,
+            y=682.0,
+            width=250.58250427246094,
+            height=55.0
+        )
+
+        self.button_image_5 = PhotoImage(
+            file=relative_to_assets("download_no_space_button.png"))
+        self.download_no_space_button = Button(
+            image=self.button_image_5,
+            borderwidth=0,
+            highlightthickness=0,
+            command=lambda: self.downloadfile_nospace(),
+            relief="flat"
+        )
+        self.download_no_space_button.place(
+            x=669.0,
+            y=379.0,
+            width=75.0,
+            height=75.0
+        )
+
+        self.button_image_6 = PhotoImage(
+            file=relative_to_assets("download_with_space_button.png"))
+        self.download_with_space_button = Button(
+            image=self.button_image_6,
+            borderwidth=0,
+            highlightthickness=0,
+            command=lambda: self.downloadfile_withspace(),
+            relief="flat"
+        )
+        self.download_with_space_button.place(
+            x=669.0,
+            y=556.0,
+            width=75.0,
+            height=75.0
+        )
+
+        self.button_image_7 = PhotoImage(
+            file=relative_to_assets("uploadbiner_plaintext_button.png"))
+        self.uploadbiner_plaintext_button = Button(
+            image=self.button_image_7,
+            borderwidth=0,
+            highlightthickness=0,
+            command=lambda: self.uploadfilebiner(),
+            relief="flat"
+        )
+        self.uploadbiner_plaintext_button.place(
+            x=68.0,
+            y=417.0,
+            width=75.0,
+            height=48.0
+        )
+
+        self.button_image_8 = PhotoImage(
+            file=relative_to_assets("uploadbiner_key_button.png"))
+        self.uploadbiner_key_button = Button(
+            image=self.button_image_8,
+            borderwidth=0,
+            highlightthickness=0,
+            command=lambda: self.uploadfilebiner(),
+            relief="flat"
+        )
+        self.uploadbiner_key_button.place(
+            x=68.0,
+            y=594.0,
+            width=75.0,
+            height=48.0
+        )
+
+        self.button_image_9 = PhotoImage(
+            file=relative_to_assets("uploadtxt_plaintext_button.png"))
+        self.uploadtxt_plaintext_button = Button(
+            image=self.button_image_9,
+            borderwidth=0,
+            highlightthickness=0,
+            command=lambda: self.uploadfiletxt(),
+            relief="flat"
+        )
+        self.uploadtxt_plaintext_button.place(
+            x=68.0,
+            y=360.0,
+            width=75.0,
+            height=48.0
+        )
+
+        self.button_image_10 = PhotoImage(
+            file=relative_to_assets("uploadtxt_key_button.png"))
+        self.uploadtxt_key_button = Button(
+            image=self.button_image_10,
+            borderwidth=0,
+            highlightthickness=0,
+            command=lambda: self.uploadfiletxt(),
+            relief="flat"
+        )
+        self.uploadtxt_key_button.place(
+            x=68.0,
+            y=537.0,
+            width=75.0,
+            height=48.0
+        )
+
         self.canvas.create_text(
-            697.0,
+            773.0,
             505.0,
             anchor="nw",
             text="Ciphertext (5-word):",
@@ -223,7 +287,7 @@ class VigenerePage(Tk.Frame):
         )
 
         self.canvas.create_text(
-            697.0,
+            773.0,
             331.0,
             anchor="nw",
             text="Ciphertext (no space):",
@@ -232,7 +296,7 @@ class VigenerePage(Tk.Frame):
         )
 
         self.canvas.create_text(
-            88.0,
+            158.0,
             505.0,
             anchor="nw",
             text="Enter secret key for encryption and decryption:",
@@ -241,7 +305,7 @@ class VigenerePage(Tk.Frame):
         )
 
         self.canvas.create_text(
-            88.0,
+            158.0,
             331.0,
             anchor="nw",
             text="Enter text for encryption and decryption:",
@@ -250,7 +314,7 @@ class VigenerePage(Tk.Frame):
         )
 
         self.canvas.create_text(
-            310.0,
+            224.0,
             97.0,
             anchor="nw",
             text="Vigenere Cipher Standard",
@@ -265,7 +329,7 @@ class VigenerePage(Tk.Frame):
         self.origin.Home()
     
     def remove_not_alphabet(self,text):
-        remove = "".join(i for i in text if i.isalpha())
+        remove = ''.join(i for i in text if i.isalpha())
         return remove
     
     def length_key(self, plaintext,key):
@@ -287,46 +351,56 @@ class VigenerePage(Tk.Frame):
     def encrypt(self):
         plaintext = self.plain.get()
         key = self.key.get()
-        
-        non_alphabet_plaintext = self.remove_not_alphabet(plaintext)
-        non_alphabet_key = self.remove_not_alphabet(key)
-        check_length_key = self.length_key(non_alphabet_plaintext,non_alphabet_key)
-        uppercase_plaintext = self.uppercase_text(non_alphabet_plaintext)
-        uppercase_key = self.uppercase_text(check_length_key)
 
-        ciphertext = []
-        for i in range (len(uppercase_plaintext)):
-            plaintext_to_int = ord(uppercase_plaintext[i]) - ord('A')
-            key_to_int = ord(uppercase_key[i]) - ord('A')
-            encrypt_formula = (plaintext_to_int + key_to_int) % 26
-            ciphertext.append(chr(encrypt_formula + ord('A')))
-        result_no_space = "".join(ciphertext)
-        self.cipher_no_space.set(result_no_space)
+        if len(plaintext) == 0:
+            messagebox.showerror("Error", "Please input plaintext / file")
+        elif len(key) == 0:
+            messagebox.showerror("Error", "Please input key / file")
+        else :   
+            non_alphabet_plaintext = self.remove_not_alphabet(plaintext)
+            non_alphabet_key = self.remove_not_alphabet(key)
+            check_length_key = self.length_key(non_alphabet_plaintext,non_alphabet_key)
+            uppercase_plaintext = self.uppercase_text(non_alphabet_plaintext)
+            uppercase_key = self.uppercase_text(check_length_key)
 
-        result_with_space = self.text_with_space(result_no_space)
-        self.cipher_with_space.set(result_with_space)
+            ciphertext = []
+            for i in range (len(uppercase_plaintext)):
+                plaintext_to_int = ord(uppercase_plaintext[i]) - ord('A')
+                key_to_int = ord(uppercase_key[i]) - ord('A')
+                encrypt_formula = (plaintext_to_int + key_to_int) % 26
+                ciphertext.append(chr(encrypt_formula + ord('A')))
+            result_no_space = "".join(ciphertext)
+            self.cipher_no_space.set(result_no_space)
+
+            result_with_space = self.text_with_space(result_no_space)
+            self.cipher_with_space.set(result_with_space)
     
     def decrypt(self):
         plaintext = self.plain.get()
         key = self.key.get()
         
-        non_alphabet_plaintext = self.remove_not_alphabet(plaintext)
-        non_alphabet_key = self.remove_not_alphabet(key)
-        check_length_key = self.length_key(non_alphabet_plaintext,non_alphabet_key)
-        uppercase_plaintext = self.uppercase_text(non_alphabet_plaintext)
-        uppercase_key = self.uppercase_text(check_length_key)
+        if len(plaintext) == 0:
+            messagebox.showerror("Error", "Please input plaintext / file")
+        elif len(key) == 0:
+            messagebox.showerror("Error", "Please input key / file")
+        else :
+            non_alphabet_plaintext = self.remove_not_alphabet(plaintext)
+            non_alphabet_key = self.remove_not_alphabet(key)
+            check_length_key = self.length_key(non_alphabet_plaintext,non_alphabet_key)
+            uppercase_plaintext = self.uppercase_text(non_alphabet_plaintext)
+            uppercase_key = self.uppercase_text(check_length_key)
 
-        ciphertext = []
-        for i in range (len(uppercase_plaintext)):
-            plaintext_to_int = ord(uppercase_plaintext[i]) - ord('A')
-            key_to_int = ord(uppercase_key[i]) - ord('A')
-            encrypt_formula = (plaintext_to_int - key_to_int) % 26
-            ciphertext.append(chr(encrypt_formula + ord('A')))
-        result_no_space = "".join(ciphertext)
-        self.cipher_no_space.set(result_no_space)
+            ciphertext = []
+            for i in range (len(uppercase_plaintext)):
+                plaintext_to_int = ord(uppercase_plaintext[i]) - ord('A')
+                key_to_int = ord(uppercase_key[i]) - ord('A')
+                encrypt_formula = (plaintext_to_int - key_to_int) % 26
+                ciphertext.append(chr(encrypt_formula + ord('A')))
+            result_no_space = "".join(ciphertext)
+            self.cipher_no_space.set(result_no_space)
 
-        result_with_space = self.text_with_space(result_no_space)
-        self.cipher_with_space.set(result_with_space)
+            result_with_space = self.text_with_space(result_no_space)
+            self.cipher_with_space.set(result_with_space)
     
     def reset(self):
         self.plain.set("")
@@ -340,8 +414,26 @@ class VigenerePage(Tk.Frame):
             read_filetxt = file.read(10000)
             self.plain.set(read_filetxt)
     
-    def downloadfile(self):
-        file = filedialog.asksaveasfile(mode='w', defaultextension=".txt")
+    def uploadfilebiner(self):
+        file = filedialog.askopenfile(mode='rb', filetypes =[('All Files', '*')])
         if file != None:
-            file.write(self.cipher_no_space.get())
-            file.close()
+            read_filetxt = file.read(10000)
+            self.plain.set(read_filetxt)
+    
+    def downloadfile_nospace(self):
+        if len(self.plain.get()) == 0:
+            messagebox.showerror("Error", "Please input plaintext / file")
+        else :
+            file = filedialog.asksaveasfile(mode='w', defaultextension=".txt")
+            if file != None:
+                file.write(self.cipher_no_space.get())
+                file.close()
+    
+    def downloadfile_withspace(self):
+        if len(self.plain.get()) == 0:
+            messagebox.showerror("Error", "Please input plaintext / file")
+        else :
+            file = filedialog.asksaveasfile(mode='w', defaultextension=".txt")
+            if file != None:
+                file.write(self.cipher_with_space.get())
+                file.close()
