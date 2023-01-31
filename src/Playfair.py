@@ -275,3 +275,45 @@ class PlayfairPage(Tk.Frame):
             group_text.append(space_text)
         result = " ".join(group_text)
         return result
+
+    def removed_plaintext(plaintext):
+        plaintext_removed = plaintext.replace("J", "")
+        output_plaintext = ""
+        for i in plaintext_removed:
+            if i not in output_plaintext:
+                output_plaintext = output_plaintext + i
+        output_plaintext_new = output_plaintext.replace(" ", "")
+        L = list(string.ascii_uppercase)
+        result = "".join(L)
+        list_akhir = output_plaintext_new + result
+        output_list = ""
+        for i in list_akhir:
+                if i not in output_list:
+                        output_list = output_list + i
+        output_list_new = output_list.replace(" ", "")
+        output_list_new2 = output_list_new.replace("J", "")
+        return output_list_new2
+    
+    def key_matrix(key):
+        matrix_key = removed_plaintext(key)
+        matrix = []
+        for i in range (5):
+            rowMatrix = []
+            for j in range(5):
+                rowMatrix.append(matrix_key[5 * i + j])
+            matrix.append(rowMatrix)
+        return matrix
+    
+    def final_plaintext(plaintext):
+        for i in plaintext:
+            if i == 'J':
+                plaintext_new = plaintext.replace("J", "I")
+        return plaintext_new
+    
+    def bigram(plaintext):
+        bigram_text = []
+        for i in range(0, len(plaintext), 2):
+            space_text = plaintext[i:i+2]
+            bigram_text.append(space_text)
+        result = " ".join(bigram_text)
+        return result   
