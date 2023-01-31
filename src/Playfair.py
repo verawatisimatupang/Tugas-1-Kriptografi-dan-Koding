@@ -195,7 +195,7 @@ class PlayfairPage(Tk.Frame):
             image=self.button_image_6,
             borderwidth=0,
             highlightthickness=0,
-            command=lambda: print("back_button clicked"),
+            command=lambda: self.click_backHome(),
             relief="flat"
         )
         self.back_button.place(
@@ -252,3 +252,26 @@ class PlayfairPage(Tk.Frame):
 
     def startPage(self):
         self.mainloop()
+    
+    def click_backHome(self):
+        self.origin.Home()
+    
+    def remove_not_alphabet(text):
+        remove = "".join(i for i in text if i.isalpha())
+        return remove
+    
+    def length_key(plaintext,key):
+        while len(key) < len(plaintext):
+            key += key
+        return key[:len(plaintext)]
+    
+    def uppercase_text(text):
+        return text.upper()
+    
+    def text_with_space(text):
+        group_text = []
+        for i in range (0, len(text), 5):
+            space_text = text[i:i+5]
+            group_text.append(space_text)
+        result = " ".join(group_text)
+        return result
