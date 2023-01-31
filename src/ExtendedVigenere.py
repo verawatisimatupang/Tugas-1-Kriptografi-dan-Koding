@@ -255,11 +255,7 @@ class ExtendedVigenerePage(Tk.Frame):
     
     def click_backHome(self):
         self.origin.Home()
-    
-    def remove_not_alphabet(text):
-        remove = "".join(i for i in text if i.isalpha())
-        return remove
-    
+
     def length_key(plaintext,key):
         while len(key) < len(plaintext):
             key += key
