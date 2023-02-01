@@ -310,11 +310,7 @@ class PlayfairPage(Tk.Frame):
             if i == 'J':
                 plaintext_new = plaintext.replace("J", "I")
         return plaintext_new
-    
-    def remove_not_alphabet(self, text):
-        remove = ''.join(i for i in text if i.isalpha())
-        return remove
-
+   
     def bigram_no_same_letters(self, plaintext):
         i = 0
         final_plaintext = self.remove_not_alphabet(plaintext)
