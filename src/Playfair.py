@@ -1,6 +1,7 @@
 from pathlib import Path
 from tkinter import Tk, Canvas, Entry, Text, Button, PhotoImage
 import tkinter as Tk
+import string
 
 OUTPUT_PATH = Path(__file__).parent
 ASSETS_PATH = OUTPUT_PATH / Path(r"../img")
@@ -256,19 +257,19 @@ class PlayfairPage(Tk.Frame):
     def click_backHome(self):
         self.origin.Home()
     
-    def remove_not_alphabet(text):
+    def remove_not_alphabet(self, text):
         remove = "".join(i for i in text if i.isalpha())
         return remove
     
-    def length_key(plaintext,key):
+    def length_key(self, plaintext,key):
         while len(key) < len(plaintext):
             key += key
         return key[:len(plaintext)]
     
-    def uppercase_text(text):
+    def uppercase_text(self, text):
         return text.upper()
     
-    def text_with_space(text):
+    def text_with_space(self, text):
         group_text = []
         for i in range (0, len(text), 5):
             space_text = text[i:i+5]
@@ -276,7 +277,7 @@ class PlayfairPage(Tk.Frame):
         result = " ".join(group_text)
         return result
 
-    def removed_plaintext(plaintext):
+    def removed_plaintext(self, plaintext):
         plaintext_removed = plaintext.replace("J", "")
         output_plaintext = ""
         for i in plaintext_removed:
@@ -294,8 +295,8 @@ class PlayfairPage(Tk.Frame):
         output_list_new2 = output_list_new.replace("J", "")
         return output_list_new2
     
-    def key_matrix(key):
-        matrix_key = removed_plaintext(key)
+    def key_matrix(self, key):
+        matrix_key = self.removed_plaintext(key)
         matrix = []
         for i in range (5):
             rowMatrix = []
@@ -304,16 +305,53 @@ class PlayfairPage(Tk.Frame):
             matrix.append(rowMatrix)
         return matrix
     
-    def final_plaintext(plaintext):
+    def final_plaintext(self, plaintext):
         for i in plaintext:
             if i == 'J':
                 plaintext_new = plaintext.replace("J", "I")
         return plaintext_new
     
-    def bigram(plaintext):
+    def remove_not_alphabet(self, text):
+        remove = ''.join(i for i in text if i.isalpha())
+        return remove
+
+    def bigram_no_same_letters(self, plaintext):
+        i = 0
+        final_plaintext = self.remove_not_alphabet(plaintext)
+        while (i<len(final_plaintext)):
+            l1 = final_plaintext[i]
+            if i == len(final_plaintext)-1:
+                final_plaintext = final_plaintext + 'X'
+                i += 2
+                continue
+            l2 = final_plaintext[i+1]
+            if l1==l2:
+                final_plaintext = final_plaintext[:i+1] + "X" + final_plaintext[i+1:]
+            i +=2
+
         bigram_text = []
-        for i in range(0, len(plaintext), 2):
-            space_text = plaintext[i:i+2]
+        for i in range(0, len(final_plaintext), 2):
+            space_text = final_plaintext[i:i+2]
             bigram_text.append(space_text)
         result = " ".join(bigram_text)
-        return result   
+
+        return result
+    
+    # def locateIdx(self, letter, matrix):
+    #     for i in range(5):
+    #         try:
+    #             idx = matrix[i].idx(letter)
+    #             return(i, idx)
+    #         except:
+    #             continue
+
+    # def encrypt(plaintext, key):
+    #     ciphertext = []
+    #     matrixKey = self.key_matrix(key)
+
+    #     i = 0
+    #     while(i<len(plaintext)):
+    #         x1 = locateIdx
+
+
+                
