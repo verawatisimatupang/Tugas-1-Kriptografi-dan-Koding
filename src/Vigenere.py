@@ -219,7 +219,7 @@ class VigenerePage(Tk.Frame):
             image=self.button_image_7,
             borderwidth=0,
             highlightthickness=0,
-            command=lambda: self.uploadfilebiner(),
+            command=lambda: self.uploadfilebiner_plaintext(),
             relief="flat"
         )
         self.uploadbiner_plaintext_button.place(
@@ -235,7 +235,7 @@ class VigenerePage(Tk.Frame):
             image=self.button_image_8,
             borderwidth=0,
             highlightthickness=0,
-            command=lambda: self.uploadfilebiner(),
+            command=lambda: self.uploadfilebiner_key(),
             relief="flat"
         )
         self.uploadbiner_key_button.place(
@@ -251,7 +251,7 @@ class VigenerePage(Tk.Frame):
             image=self.button_image_9,
             borderwidth=0,
             highlightthickness=0,
-            command=lambda: self.uploadfiletxt(),
+            command=lambda: self.uploadfiletxt_plaintext(),
             relief="flat"
         )
         self.uploadtxt_plaintext_button.place(
@@ -267,7 +267,7 @@ class VigenerePage(Tk.Frame):
             image=self.button_image_10,
             borderwidth=0,
             highlightthickness=0,
-            command=lambda: self.uploadfiletxt(),
+            command=lambda: self.uploadfiletxt_key(),
             relief="flat"
         )
         self.uploadtxt_key_button.place(
@@ -332,10 +332,16 @@ class VigenerePage(Tk.Frame):
         remove = ''.join(i for i in text if i.isalpha())
         return remove
     
-    def length_key(self, plaintext,key):
+    def checklength_key(self,plaintext, key):
         while len(key) < len(plaintext):
             key += key
-        return key[:len(plaintext)]
+            result = key[:len(plaintext)]
+        finalkey = []
+        for i in range(0, len(key), len(plaintext)):
+            space_text = key[i:len(plaintext)]
+            finalkey.append(space_text)
+            result = "".join(finalkey) 
+        return result 
     
     def uppercase_text(self, text):
         return text.upper()
@@ -359,7 +365,7 @@ class VigenerePage(Tk.Frame):
         else :   
             non_alphabet_plaintext = self.remove_not_alphabet(plaintext)
             non_alphabet_key = self.remove_not_alphabet(key)
-            check_length_key = self.length_key(non_alphabet_plaintext,non_alphabet_key)
+            check_length_key = self.checklength_key(non_alphabet_plaintext,non_alphabet_key)
             uppercase_plaintext = self.uppercase_text(non_alphabet_plaintext)
             uppercase_key = self.uppercase_text(check_length_key)
 
@@ -386,7 +392,7 @@ class VigenerePage(Tk.Frame):
         else :
             non_alphabet_plaintext = self.remove_not_alphabet(plaintext)
             non_alphabet_key = self.remove_not_alphabet(key)
-            check_length_key = self.length_key(non_alphabet_plaintext,non_alphabet_key)
+            check_length_key = self.checklength_key(non_alphabet_plaintext,non_alphabet_key)
             uppercase_plaintext = self.uppercase_text(non_alphabet_plaintext)
             uppercase_key = self.uppercase_text(check_length_key)
 
@@ -408,17 +414,29 @@ class VigenerePage(Tk.Frame):
         self.cipher_no_space.set("")
         self.cipher_with_space.set("")
     
-    def uploadfiletxt(self):
+    def uploadfiletxt_plaintext(self):
         file = filedialog.askopenfile(mode='r', filetypes =[('Text files', 'txt')])
         if file != None:
             read_filetxt = file.read(10000)
             self.plain.set(read_filetxt)
     
-    def uploadfilebiner(self):
+    def uploadfiletxt_key(self):
+        file = filedialog.askopenfile(mode='r', filetypes =[('Text files', 'txt')])
+        if file != None:
+            read_filetxt = file.read(10000)
+            self.key.set(read_filetxt)
+
+    def uploadfilebiner_plaintext(self):
         file = filedialog.askopenfile(mode='rb', filetypes =[('All Files', '*')])
         if file != None:
             read_filetxt = file.read(10000)
             self.plain.set(read_filetxt)
+    
+    def uploadfilebiner_key(self):
+        file = filedialog.askopenfile(mode='rb', filetypes =[('All Files', '*')])
+        if file != None:
+            read_filetxt = file.read(10000)
+            self.key.set(read_filetxt)
     
     def downloadfile_nospace(self):
         if len(self.plain.get()) == 0:
