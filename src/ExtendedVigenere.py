@@ -219,7 +219,7 @@ class ExtendedVigenerePage(Tk.Frame):
             image=self.button_image_7,
             borderwidth=0,
             highlightthickness=0,
-            command=lambda: self.uploadfilebiner(),
+            command=lambda: self.uploadfilebiner_plaintext(),
             relief="flat"
         )
         self.uploadbiner_plaintext_button.place(
@@ -235,7 +235,7 @@ class ExtendedVigenerePage(Tk.Frame):
             image=self.button_image_8,
             borderwidth=0,
             highlightthickness=0,
-            command=lambda: self.uploadfilebiner(),
+            command=lambda: self.uploadfilebiner_key(),
             relief="flat"
         )
         self.uploadbiner_key_button.place(
@@ -251,7 +251,7 @@ class ExtendedVigenerePage(Tk.Frame):
             image=self.button_image_9,
             borderwidth=0,
             highlightthickness=0,
-            command=lambda: self.uploadfiletxt(),
+            command=lambda: self.uploadfiletxt_plaintext(),
             relief="flat"
         )
         self.uploadtxt_plaintext_button.place(
@@ -267,7 +267,7 @@ class ExtendedVigenerePage(Tk.Frame):
             image=self.button_image_10,
             borderwidth=0,
             highlightthickness=0,
-            command=lambda: self.uploadfiletxt(),
+            command=lambda: self.uploadfiletxt_key(),
             relief="flat"
         )
         self.uploadtxt_key_button.place(
@@ -328,10 +328,16 @@ class ExtendedVigenerePage(Tk.Frame):
     def click_backHome(self):
         self.origin.Home()
     
-    def length_key(self, plaintext,key):
+    def checklength_key(self,plaintext, key):
         while len(key) < len(plaintext):
             key += key
-        return key[:len(plaintext)]
+            result = key[:len(plaintext)]
+        finalkey = []
+        for i in range(0, len(key), len(plaintext)):
+            space_text = key[i:len(plaintext)]
+            finalkey.append(space_text)
+            result = "".join(finalkey) 
+        return result 
     
     def text_with_space(self,text):
         group_text = []
@@ -350,7 +356,7 @@ class ExtendedVigenerePage(Tk.Frame):
         elif len(key) == 0:
             messagebox.showerror("Error", "Please input key / file")
         else :
-            check_length_key = self.length_key(plaintext,key)
+            check_length_key = self.checklength_key(plaintext,key)
 
             ciphertext = []
             for i in range (len(plaintext)):
@@ -373,7 +379,7 @@ class ExtendedVigenerePage(Tk.Frame):
         elif len(key) == 0:
             messagebox.showerror("Error", "Please input key / file")
         else :
-            check_length_key = self.length_key(plaintext,key)
+            check_length_key = self.checklength_key(plaintext,key)
 
             ciphertext = []
             for i in range (len(plaintext)):
@@ -393,17 +399,29 @@ class ExtendedVigenerePage(Tk.Frame):
         self.cipher_no_space.set("")
         self.cipher_with_space.set("")
     
-    def uploadfiletxt(self):
+    def uploadfiletxt_plaintext(self):
         file = filedialog.askopenfile(mode='r', filetypes =[('Text files', 'txt')])
         if file != None:
             read_filetxt = file.read(10000)
             self.plain.set(read_filetxt)
     
-    def uploadfilebiner(self):
+    def uploadfiletxt_key(self):
+        file = filedialog.askopenfile(mode='r', filetypes =[('Text files', 'txt')])
+        if file != None:
+            read_filetxt = file.read(10000)
+            self.key.set(read_filetxt)
+
+    def uploadfilebiner_plaintext(self):
         file = filedialog.askopenfile(mode='rb', filetypes =[('All Files', '*')])
         if file != None:
             read_filetxt = file.read(10000)
             self.plain.set(read_filetxt)
+    
+    def uploadfilebiner_key(self):
+        file = filedialog.askopenfile(mode='rb', filetypes =[('All Files', '*')])
+        if file != None:
+            read_filetxt = file.read(10000)
+            self.key.set(read_filetxt)
     
     def downloadfile_nospace(self):
         if len(self.plain.get()) == 0:
