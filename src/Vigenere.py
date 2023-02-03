@@ -182,35 +182,35 @@ class VigenerePage(Tk.Frame):
         )
 
         self.button_image_5 = PhotoImage(
-            file=relative_to_assets("download_no_space_button.png"))
-        self.download_no_space_button = Button(
+            file=relative_to_assets("downloadbiner_no_space_button.png"))
+        self.downloadbiner_no_space_button = Button(
             image=self.button_image_5,
             borderwidth=0,
             highlightthickness=0,
-            command=lambda: self.downloadfile_nospace(),
+            command=lambda: self.downloadfilebiner_nospace(),
             relief="flat"
         )
-        self.download_no_space_button.place(
+        self.downloadbiner_no_space_button.place(
             x=669.0,
-            y=379.0,
+            y=417.0,
             width=75.0,
-            height=75.0
+            height=48.0
         )
 
         self.button_image_6 = PhotoImage(
-            file=relative_to_assets("download_with_space_button.png"))
-        self.download_with_space_button = Button(
+            file=relative_to_assets("downloadbiner_with_space_button.png"))
+        self.downloadbiner_with_space_button = Button(
             image=self.button_image_6,
             borderwidth=0,
             highlightthickness=0,
-            command=lambda: self.downloadfile_withspace(),
+            command=lambda: self.downloadfilebiner_withspace(),
             relief="flat"
         )
-        self.download_with_space_button.place(
-            x=669.0,
-            y=556.0,
+        self.downloadbiner_with_space_button.place(
+            x=670.0,
+            y=594.0,
             width=75.0,
-            height=75.0
+            height=48.0
         )
 
         self.button_image_7 = PhotoImage(
@@ -277,6 +277,38 @@ class VigenerePage(Tk.Frame):
             height=48.0
         )
 
+        self.button_image_11 = PhotoImage(
+            file=relative_to_assets("downloadtxt_no_space_button.png"))
+        self.downloadtxt_no_space_button = Button(
+            image=self.button_image_11,
+            borderwidth=0,
+            highlightthickness=0,
+            command=lambda: self.downloadfiletxt_nospace(),
+            relief="flat"
+        )
+        self.downloadtxt_no_space_button.place(
+            x=669.0,
+            y=360.0,
+            width=75.0,
+            height=48.0
+        )
+
+        self.button_image_12 = PhotoImage(
+            file=relative_to_assets("downloadtxt_with_space_button.png"))
+        self.downloadtxt_with_space_button = Button(
+            image=self.button_image_12,
+            borderwidth=0,
+            highlightthickness=0,
+            command=lambda: self.downloadfiletxt_withspace(),
+            relief="flat"
+        )
+        self.downloadtxt_with_space_button.place(
+            x=670.0,
+            y=537.0,
+            width=75.0,
+            height=48.0
+        )
+
         self.canvas.create_text(
             773.0,
             505.0,
@@ -325,13 +357,16 @@ class VigenerePage(Tk.Frame):
     def startPage(self):
         self.mainloop()
     
+    # Back to home
     def click_backHome(self):
         self.origin.Home()
-    
+
+    # Remove not aplhabet
     def remove_not_alphabet(self,text):
         remove = ''.join(i for i in text if i.isalpha())
         return remove
     
+    # Check length key
     def checklength_key(self,plaintext, key):
         while len(key) < len(plaintext):
             key += key
@@ -343,9 +378,11 @@ class VigenerePage(Tk.Frame):
             result = "".join(finalkey) 
         return result 
     
+    # Uppercase text
     def uppercase_text(self, text):
         return text.upper()
     
+    # Text with space
     def text_with_space(self,text):
         group_text = []
         for i in range (0, len(text), 5):
@@ -354,6 +391,7 @@ class VigenerePage(Tk.Frame):
         result = " ".join(group_text)
         return result
 
+    # Encrypt
     def encrypt(self):
         plaintext = self.plain.get()
         key = self.key.get()
@@ -381,6 +419,7 @@ class VigenerePage(Tk.Frame):
             result_with_space = self.text_with_space(result_no_space)
             self.cipher_with_space.set(result_with_space)
     
+    # Decrypt
     def decrypt(self):
         plaintext = self.plain.get()
         key = self.key.get()
@@ -408,37 +447,45 @@ class VigenerePage(Tk.Frame):
             result_with_space = self.text_with_space(result_no_space)
             self.cipher_with_space.set(result_with_space)
     
+    # Reset
     def reset(self):
         self.plain.set("")
         self.key.set("")
         self.cipher_no_space.set("")
         self.cipher_with_space.set("")
     
+    # Upload file txt of plaintext
     def uploadfiletxt_plaintext(self):
         file = filedialog.askopenfile(mode='r', filetypes =[('Text files', 'txt')])
         if file != None:
-            read_filetxt = file.read(10000)
+            read_filetxt = file.read()
             self.plain.set(read_filetxt)
     
+    # Upload file txt of key
     def uploadfiletxt_key(self):
         file = filedialog.askopenfile(mode='r', filetypes =[('Text files', 'txt')])
         if file != None:
-            read_filetxt = file.read(10000)
+            read_filetxt = file.read()
             self.key.set(read_filetxt)
 
+    # Upload file biner of plaintext
     def uploadfilebiner_plaintext(self):
         file = filedialog.askopenfile(mode='rb', filetypes =[('All Files', '*')])
         if file != None:
-            read_filetxt = file.read(10000)
-            self.plain.set(read_filetxt)
+            read_filebiner = bytearray(file.read(10000))
+            text = read_filebiner.decode("latin-1")
+            self.plain.set(text)
     
+    # Upload file biner of key
     def uploadfilebiner_key(self):
         file = filedialog.askopenfile(mode='rb', filetypes =[('All Files', '*')])
         if file != None:
-            read_filetxt = file.read(10000)
-            self.key.set(read_filetxt)
+            read_filebiner = bytearray(file.read(10000))
+            text = read_filebiner.decode("latin-1")
+            self.plain.set(text)
     
-    def downloadfile_nospace(self):
+    # Download file txt of cipher no space
+    def downloadfiletxt_nospace(self):
         if len(self.plain.get()) == 0:
             messagebox.showerror("Error", "Please input plaintext / file")
         else :
@@ -447,11 +494,36 @@ class VigenerePage(Tk.Frame):
                 file.write(self.cipher_no_space.get())
                 file.close()
     
-    def downloadfile_withspace(self):
+    # Download file txt of cipher with space
+    def downloadfiletxt_withspace(self):
         if len(self.plain.get()) == 0:
             messagebox.showerror("Error", "Please input plaintext / file")
         else :
             file = filedialog.asksaveasfile(mode='w', defaultextension=".txt")
             if file != None:
                 file.write(self.cipher_with_space.get())
+                file.close()
+    
+    # Download file biner of cipher no space
+    def downloadfilebiner_nospace(self):
+        if len(self.plain.get()) == 0:
+            messagebox.showerror("Error", "Please input plaintext / file")
+        else :
+            file = filedialog.asksaveasfile(mode='wb', filetypes =[('All Files', '*')])
+            if file != None:
+                get_filebiner = self.cipher_no_space.get()
+                write_filebiner = get_filebiner.encode("latin-1")
+                file.write(write_filebiner)
+                file.close()
+    
+    # Download file biner of cipher with space
+    def downloadfilebiner_withspace(self):
+        if len(self.plain.get()) == 0:
+            messagebox.showerror("Error", "Please input plaintext / file")
+        else :
+            file = filedialog.asksaveasfile(mode='wb', filetypes =[('All Files', '*')])
+            if file != None:
+                get_filebiner = self.cipher_no_space.get()
+                write_filebiner = get_filebiner.encode("latin-1")
+                file.write(write_filebiner)
                 file.close()
