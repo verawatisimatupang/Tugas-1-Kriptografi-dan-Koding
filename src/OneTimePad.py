@@ -183,35 +183,35 @@ class OneTimePadPage(Tk.Frame):
         )
 
         self.button_image_5 = PhotoImage(
-            file=relative_to_assets("download_no_space_button.png"))
-        self.download_no_space_button = Button(
+            file=relative_to_assets("downloadbiner_no_space_button.png"))
+        self.downloadbiner_no_space_button = Button(
             image=self.button_image_5,
             borderwidth=0,
             highlightthickness=0,
-            command=lambda: self.downloadfile_nospace(),
+            command=lambda: self.downloadfilebiner_nospace(),
             relief="flat"
         )
-        self.download_no_space_button.place(
+        self.downloadbiner_no_space_button.place(
             x=669.0,
-            y=379.0,
+            y=417.0,
             width=75.0,
-            height=75.0
+            height=48.0
         )
 
         self.button_image_6 = PhotoImage(
-            file=relative_to_assets("download_with_space_button.png"))
-        self.download_with_space_button = Button(
+            file=relative_to_assets("downloadbiner_with_space_button.png"))
+        self.downloadbiner_with_space_button = Button(
             image=self.button_image_6,
             borderwidth=0,
             highlightthickness=0,
-            command=lambda: self.downloadfile_withspace(),
+            command=lambda: self.downloadfilebiner_withspace(),
             relief="flat"
         )
-        self.download_with_space_button.place(
-            x=669.0,
-            y=556.0,
+        self.downloadbiner_with_space_button.place(
+            x=670.0,
+            y=594.0,
             width=75.0,
-            height=75.0
+            height=48.0
         )
 
         self.button_image_7 = PhotoImage(
@@ -273,6 +273,38 @@ class OneTimePadPage(Tk.Frame):
         )
         self.uploadtxt_key_button.place(
             x=68.0,
+            y=537.0,
+            width=75.0,
+            height=48.0
+        )
+
+        self.button_image_11 = PhotoImage(
+            file=relative_to_assets("downloadtxt_no_space_button.png"))
+        self.downloadtxt_no_space_button = Button(
+            image=self.button_image_11,
+            borderwidth=0,
+            highlightthickness=0,
+            command=lambda: self.downloadfiletxt_nospace(),
+            relief="flat"
+        )
+        self.downloadtxt_no_space_button.place(
+            x=669.0,
+            y=360.0,
+            width=75.0,
+            height=48.0
+        )
+
+        self.button_image_12 = PhotoImage(
+            file=relative_to_assets("downloadtxt_with_space_button.png"))
+        self.downloadtxt_with_space_button = Button(
+            image=self.button_image_12,
+            borderwidth=0,
+            highlightthickness=0,
+            command=lambda: self.downloadfiletxt_withspace(),
+            relief="flat"
+        )
+        self.downloadtxt_with_space_button.place(
+            x=670.0,
             y=537.0,
             width=75.0,
             height=48.0
@@ -346,28 +378,30 @@ class OneTimePadPage(Tk.Frame):
     def uploadfiletxt_plaintext(self):
         file = filedialog.askopenfile(mode='r', filetypes =[('Text files', 'txt')])
         if file != None:
-            read_filetxt = file.read(10000)
+            read_filetxt = file.read()
             self.plain.set(read_filetxt)
     
     def uploadfiletxt_key(self):
         file = filedialog.askopenfile(mode='r', filetypes =[('Text files', 'txt')])
         if file != None:
-            read_filetxt = file.read(10000)
+            read_filetxt = file.read()
             self.key.set(read_filetxt)
 
     def uploadfilebiner_plaintext(self):
         file = filedialog.askopenfile(mode='rb', filetypes =[('All Files', '*')])
         if file != None:
-            read_filetxt = file.read(10000)
-            self.plain.set(read_filetxt)
+            read_filebiner = bytearray(file.read())
+            text = read_filebiner.decode("latin-1")
+            self.plain.set(text)
     
     def uploadfilebiner_key(self):
         file = filedialog.askopenfile(mode='rb', filetypes =[('All Files', '*')])
         if file != None:
-            read_filetxt = file.read(10000)
-            self.key.set(read_filetxt)
+            read_filebiner = bytearray(file.read())
+            text = read_filebiner.decode("latin-1")
+            self.key.set(text)
     
-    def downloadfile_nospace(self):
+    def downloadfiletxt_nospace(self):
         if len(self.plain.get()) == 0:
             messagebox.showerror("Error", "Please input plaintext / file")
         else :
@@ -376,13 +410,35 @@ class OneTimePadPage(Tk.Frame):
                 file.write(self.cipher_no_space.get())
                 file.close()
     
-    def downloadfile_withspace(self):
+    def downloadfiletxt_withspace(self):
         if len(self.plain.get()) == 0:
             messagebox.showerror("Error", "Please input plaintext / file")
         else :
             file = filedialog.asksaveasfile(mode='w', defaultextension=".txt")
             if file != None:
                 file.write(self.cipher_with_space.get())
+                file.close()
+    
+    def downloadfilebiner_nospace(self):
+        if len(self.plain.get()) == 0:
+            messagebox.showerror("Error", "Please input plaintext / file")
+        else :
+            file = filedialog.asksaveasfile(mode='wb', filetypes =[('All Files', '*')])
+            if file != None:
+                get_filebiner = self.cipher_no_space.get()
+                write_filebiner = get_filebiner.encode("latin-1")
+                file.write(write_filebiner)
+                file.close()
+    
+    def downloadfilebiner_withspace(self):
+        if len(self.plain.get()) == 0:
+            messagebox.showerror("Error", "Please input plaintext / file")
+        else :
+            file = filedialog.asksaveasfile(mode='wb', filetypes =[('All Files', '*')])
+            if file != None:
+                get_filebiner = self.cipher_with_space.get()
+                write_filebiner = get_filebiner.encode("latin-1")
+                file.write(write_filebiner)
                 file.close()
     
     def remove_not_alphabet(self,text):
