@@ -358,9 +358,11 @@ class OneTimePadPage(Tk.Frame):
     def startPage(self):
         self.mainloop()
     
+    # Back to home
     def click_backHome(self):
         self.origin.Home()
     
+    # Text with space
     def text_with_space(self,text):
         group_text = []
         for i in range (0, len(text), 5):
@@ -369,24 +371,28 @@ class OneTimePadPage(Tk.Frame):
         result = " ".join(group_text)
         return result
         
+    # Reset
     def reset(self):
         self.plain.set("")
         self.key.set("")
         self.cipher_no_space.set("")
         self.cipher_with_space.set("")
     
+    # Upload file txt of plaintext
     def uploadfiletxt_plaintext(self):
         file = filedialog.askopenfile(mode='r', filetypes =[('Text files', 'txt')])
         if file != None:
             read_filetxt = file.read()
             self.plain.set(read_filetxt)
     
+    # Upload file txt of key
     def uploadfiletxt_key(self):
         file = filedialog.askopenfile(mode='r', filetypes =[('Text files', 'txt')])
         if file != None:
             read_filetxt = file.read()
             self.key.set(read_filetxt)
-
+    
+    # Upload file biner of plaintext
     def uploadfilebiner_plaintext(self):
         file = filedialog.askopenfile(mode='rb', filetypes =[('All Files', '*')])
         if file != None:
@@ -394,6 +400,7 @@ class OneTimePadPage(Tk.Frame):
             text = read_filebiner.decode("latin-1")
             self.plain.set(text)
     
+    # Upload file biner of key
     def uploadfilebiner_key(self):
         file = filedialog.askopenfile(mode='rb', filetypes =[('All Files', '*')])
         if file != None:
@@ -401,6 +408,7 @@ class OneTimePadPage(Tk.Frame):
             text = read_filebiner.decode("latin-1")
             self.key.set(text)
     
+    # Download file txt of cipher no space
     def downloadfiletxt_nospace(self):
         if len(self.plain.get()) == 0:
             messagebox.showerror("Error", "Please input plaintext / file")
@@ -410,6 +418,7 @@ class OneTimePadPage(Tk.Frame):
                 file.write(self.cipher_no_space.get())
                 file.close()
     
+    # Download file txt of cipher with space
     def downloadfiletxt_withspace(self):
         if len(self.plain.get()) == 0:
             messagebox.showerror("Error", "Please input plaintext / file")
@@ -419,6 +428,7 @@ class OneTimePadPage(Tk.Frame):
                 file.write(self.cipher_with_space.get())
                 file.close()
     
+    # Download file biner of cipher no space
     def downloadfilebiner_nospace(self):
         if len(self.plain.get()) == 0:
             messagebox.showerror("Error", "Please input plaintext / file")
@@ -430,6 +440,7 @@ class OneTimePadPage(Tk.Frame):
                 file.write(write_filebiner)
                 file.close()
     
+    # Download file biner of cipher with space
     def downloadfilebiner_withspace(self):
         if len(self.plain.get()) == 0:
             messagebox.showerror("Error", "Please input plaintext / file")
@@ -441,13 +452,16 @@ class OneTimePadPage(Tk.Frame):
                 file.write(write_filebiner)
                 file.close()
     
+    # Remove not aplhabet
     def remove_not_alphabet(self,text):
         remove = ''.join(i for i in text if i.isalpha())
         return remove
 
+    # Uppercase text
     def uppercase_text(self, text):
         return text.upper()
 
+    # Random key
     def random_key(self, key):
         plaintext = self.plain.get()
         key = self.key.get()
@@ -461,6 +475,7 @@ class OneTimePadPage(Tk.Frame):
             finalkey = "".join(resultkey)
         return finalkey
 
+    # Encrypt
     def encrypt(self):
         plaintext = self.plain.get()
         key = self.key.get()
@@ -488,6 +503,7 @@ class OneTimePadPage(Tk.Frame):
             result_with_space = self.text_with_space(result_no_space)
             self.cipher_with_space.set(result_with_space)
 
+    # Decrypt
     def decrypt(self):
         plaintext = self.plain.get()
         key = self.key.get()
