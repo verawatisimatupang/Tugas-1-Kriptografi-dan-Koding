@@ -357,20 +357,24 @@ class PlayfairPage(Tk.Frame):
 
     def startPage(self):
         self.mainloop()
-    
+
+    # Back to home
     def click_backHome(self):
         self.origin.Home()
     
+    # Reset
     def reset(self):
         self.plain.set("")
         self.key.set("")
         self.cipher_no_space.set("")
         self.cipher_with_space.set("")
     
+    # Remove not aplhabet
     def remove_not_alphabet(self, text):
         remove = "".join(i for i in text if i.isalpha())
         return remove
     
+    # Text with space
     def text_with_space(self, text):
         group_text = []
         for i in range (0, len(text), 5):
@@ -379,6 +383,7 @@ class PlayfairPage(Tk.Frame):
         result = " ".join(group_text)
         return result
 
+    # Bigram no same letters
     def bigram_no_same_letters(self,plaintext):
         i = 0
         final_plaintext = self.remove_not_alphabet(plaintext).upper()
@@ -401,13 +406,15 @@ class PlayfairPage(Tk.Frame):
             bigram_text[-1] += 'X'
         return bigram_text
 
+    # Remove duplicate and J
     def remove_duplicatesnJ(self, input_list):
         output_list = []
         for element in input_list:
             if element not in output_list and element != "J":
                 output_list.append(element)
         return output_list
-        
+    
+    # Generate key table
     def generate_key_table(self, plaintext):
             output_plaintext = self.remove_not_alphabet(plaintext)
 
@@ -417,12 +424,14 @@ class PlayfairPage(Tk.Frame):
             final_text = [text[i:i + 5] for i in range(0, len(text), 5)]
             return final_text
 
+    # Search
     def search(self, karakter, key):
         for i in range (len(key)):
                 for j in range (len(key[i])):
                         if (karakter == key[i][j]) :
                                 return i,j
 
+    # Encrypt
     def encrypt(self):
         plaintext = self.plain.get()
         key = self.key.get()
@@ -461,6 +470,7 @@ class PlayfairPage(Tk.Frame):
             result_with_space = self.text_with_space(result_no_space)
             self.cipher_with_space.set(result_with_space)
 
+    # Decrypt
     def decrypt(self):
         plaintext = self.plain.get()
         key = self.key.get()
@@ -502,18 +512,21 @@ class PlayfairPage(Tk.Frame):
             result_with_space = self.text_with_space(result_no_space)
             self.cipher_with_space.set(result_with_space)
 
+    # Upload file txt of plaintext
     def uploadfiletxt_plaintext(self):
         file = filedialog.askopenfile(mode='r', filetypes =[('Text files', 'txt')])
         if file != None:
             read_filetxt = file.read()
             self.plain.set(read_filetxt)
     
+    # Upload file txt of key
     def uploadfiletxt_key(self):
         file = filedialog.askopenfile(mode='r', filetypes =[('Text files', 'txt')])
         if file != None:
             read_filetxt = file.read()
             self.key.set(read_filetxt)
 
+    # Upload file biner of plaintext
     def uploadfilebiner_plaintext(self):
         file = filedialog.askopenfile(mode='rb', filetypes =[('All Files', '*')])
         if file != None:
@@ -521,13 +534,15 @@ class PlayfairPage(Tk.Frame):
             text = read_filebiner.decode("latin-1")
             self.plain.set(text)
     
+    # Upload file biner of key
     def uploadfilebiner_key(self):
         file = filedialog.askopenfile(mode='rb', filetypes =[('All Files', '*')])
         if file != None:
             read_filebiner = file.read()
             text = read_filebiner.decode("latin-1")
             self.key.set(text)
-    
+
+    # Download file txt no space
     def downloadfiletxt_nospace(self):
         if len(self.plain.get()) == 0:
             messagebox.showerror("Error", "Please input plaintext / file")
@@ -537,6 +552,7 @@ class PlayfairPage(Tk.Frame):
                 file.write(self.cipher_no_space.get())
                 file.close()
     
+    # Download file txt with space
     def downloadfiletxt_withspace(self):
         if len(self.plain.get()) == 0:
             messagebox.showerror("Error", "Please input plaintext / file")
@@ -546,6 +562,7 @@ class PlayfairPage(Tk.Frame):
                 file.write(self.cipher_with_space.get())
                 file.close()
     
+    # Download file biner no space
     def downloadfilebiner_nospace(self):
         if len(self.plain.get()) == 0:
             messagebox.showerror("Error", "Please input plaintext / file")
@@ -557,6 +574,7 @@ class PlayfairPage(Tk.Frame):
                 file.write(write_filebiner)
                 file.close()
     
+    # Download file biner with space
     def downloadfilebiner_withspace(self):
         if len(self.plain.get()) == 0:
             messagebox.showerror("Error", "Please input plaintext / file")
