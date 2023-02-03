@@ -472,7 +472,7 @@ class VigenerePage(Tk.Frame):
     def uploadfilebiner_plaintext(self):
         file = filedialog.askopenfile(mode='rb', filetypes =[('All Files', '*')])
         if file != None:
-            read_filebiner = bytearray(file.read(10000))
+            read_filebiner = bytearray(file.read())
             text = read_filebiner.decode("latin-1")
             self.plain.set(text)
     
@@ -480,9 +480,9 @@ class VigenerePage(Tk.Frame):
     def uploadfilebiner_key(self):
         file = filedialog.askopenfile(mode='rb', filetypes =[('All Files', '*')])
         if file != None:
-            read_filebiner = bytearray(file.read(10000))
+            read_filebiner = bytearray(file.read())
             text = read_filebiner.decode("latin-1")
-            self.plain.set(text)
+            self.key.set(text)
     
     # Download file txt of cipher no space
     def downloadfiletxt_nospace(self):
@@ -523,7 +523,7 @@ class VigenerePage(Tk.Frame):
         else :
             file = filedialog.asksaveasfile(mode='wb', filetypes =[('All Files', '*')])
             if file != None:
-                get_filebiner = self.cipher_no_space.get()
+                get_filebiner = self.cipher_with_space.get()
                 write_filebiner = get_filebiner.encode("latin-1")
                 file.write(write_filebiner)
                 file.close()
