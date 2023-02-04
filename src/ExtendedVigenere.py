@@ -8,15 +8,15 @@ ASSETS_PATH = OUTPUT_PATH / Path(r"../img")
 def relative_to_assets(path: str) -> Path:
     return ASSETS_PATH / Path(path)
 
-class VigenerePage(Tk.Frame):
+class ExtendedVigenerePage(Tk.Frame):
     def __init__(self, master, pageManager):
         super().__init__(master)
         self.master = master
         self.origin = pageManager
         self.pack()
-        self.Vigenere()
+        self.ExtendedVigenere()
 
-    def Vigenere(self):
+    def ExtendedVigenere(self):
         self.canvas = Canvas(
             self.master,
             bg = "#F4F3F9",
@@ -349,7 +349,7 @@ class VigenerePage(Tk.Frame):
             224.0,
             97.0,
             anchor="nw",
-            text="Vigenere Cipher Standard",
+            text="Extended Vigenere Cipher",
             fill="#000000",
             font=("Inter Bold", 64 * -1)
         )
@@ -360,11 +360,6 @@ class VigenerePage(Tk.Frame):
     # Back to home
     def click_backHome(self):
         self.origin.Home()
-
-    # Remove not aplhabet
-    def remove_not_alphabet(self,text):
-        remove = ''.join(i for i in text if i.isalpha())
-        return remove
     
     # Check length key
     def checklength_key(self,plaintext, key):
@@ -377,10 +372,6 @@ class VigenerePage(Tk.Frame):
             finalkey.append(space_text)
             result = "".join(finalkey) 
         return result 
-    
-    # Uppercase text
-    def uppercase_text(self, text):
-        return text.upper()
     
     # Text with space
     def text_with_space(self,text):
@@ -395,24 +386,20 @@ class VigenerePage(Tk.Frame):
     def encrypt(self):
         plaintext = self.plain.get()
         key = self.key.get()
-
+        
         if len(plaintext) == 0:
             messagebox.showerror("Error", "Please input plaintext / file")
         elif len(key) == 0:
             messagebox.showerror("Error", "Please input key / file")
-        else :   
-            non_alphabet_plaintext = self.remove_not_alphabet(plaintext)
-            non_alphabet_key = self.remove_not_alphabet(key)
-            check_length_key = self.checklength_key(non_alphabet_plaintext,non_alphabet_key)
-            uppercase_plaintext = self.uppercase_text(non_alphabet_plaintext)
-            uppercase_key = self.uppercase_text(check_length_key)
+        else :
+            check_length_key = self.checklength_key(plaintext,key)
 
             ciphertext = []
-            for i in range (len(uppercase_plaintext)):
-                plaintext_to_int = ord(uppercase_plaintext[i]) - ord('A')
-                key_to_int = ord(uppercase_key[i]) - ord('A')
-                encrypt_formula = (plaintext_to_int + key_to_int) % 26
-                ciphertext.append(chr(encrypt_formula + ord('A')))
+            for i in range (len(plaintext)):
+                plaintext_to_int = ord(plaintext[i]) 
+                key_to_int = ord(check_length_key[i])
+                encrypt_formula = (plaintext_to_int + key_to_int) % 256
+                ciphertext.append(chr(encrypt_formula))
             result_no_space = "".join(ciphertext)
             self.cipher_no_space.set(result_no_space)
 
@@ -423,24 +410,20 @@ class VigenerePage(Tk.Frame):
     def decrypt(self):
         plaintext = self.plain.get()
         key = self.key.get()
-        
+
         if len(plaintext) == 0:
             messagebox.showerror("Error", "Please input plaintext / file")
         elif len(key) == 0:
             messagebox.showerror("Error", "Please input key / file")
         else :
-            non_alphabet_plaintext = self.remove_not_alphabet(plaintext)
-            non_alphabet_key = self.remove_not_alphabet(key)
-            check_length_key = self.checklength_key(non_alphabet_plaintext,non_alphabet_key)
-            uppercase_plaintext = self.uppercase_text(non_alphabet_plaintext)
-            uppercase_key = self.uppercase_text(check_length_key)
+            check_length_key = self.checklength_key(plaintext,key)
 
             ciphertext = []
-            for i in range (len(uppercase_plaintext)):
-                plaintext_to_int = ord(uppercase_plaintext[i]) - ord('A')
-                key_to_int = ord(uppercase_key[i]) - ord('A')
-                encrypt_formula = (plaintext_to_int - key_to_int) % 26
-                ciphertext.append(chr(encrypt_formula + ord('A')))
+            for i in range (len(plaintext)):
+                plaintext_to_int = ord(plaintext[i]) 
+                key_to_int = ord(check_length_key[i])
+                encrypt_formula = (plaintext_to_int - key_to_int) % 256
+                ciphertext.append(chr(encrypt_formula))
             result_no_space = "".join(ciphertext)
             self.cipher_no_space.set(result_no_space)
 
@@ -494,7 +477,7 @@ class VigenerePage(Tk.Frame):
                 file.write(self.cipher_no_space.get())
                 file.close()
     
-    # Download file txt of cipher with space
+    # Download file txt of cipher with spaces
     def downloadfiletxt_withspace(self):
         if len(self.plain.get()) == 0:
             messagebox.showerror("Error", "Please input plaintext / file")
@@ -523,7 +506,7 @@ class VigenerePage(Tk.Frame):
         else :
             file = filedialog.asksaveasfile(mode='wb', filetypes =[('All Files', '*')])
             if file != None:
-                get_filebiner = self.cipher_with_space.get()
+                get_filebiner = self.cipher_no_space.get()
                 write_filebiner = get_filebiner.encode("latin-1")
                 file.write(write_filebiner)
                 file.close()
